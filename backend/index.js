@@ -3,18 +3,17 @@ const app = express();
 const socketio = require('socket.io');
 const OpenAIAPI = require('openai');
 const mongoose = require('mongoose')
+require("dotenv").config();
 
-// const openai = new OpenAIAPI({apiKey: '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'});
-// const openai = new OpenAIAPI({apiKey: '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'});
-// const openai = new OpenAIAPI({apiKey: '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'});
-// const openai = new OpenAIAPI({apiKey: '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'});
-const openai = new OpenAIAPI({apiKey: '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'});
+
+const openai = new OpenAIAPI({apiKey: process.env.OPENAI_API_KEY});
 
 const server = app.listen(9999);
 const io = socketio(server, { cors: { origin: '*' } });
 
-const mongoURI = "mongodb+srv://minor-project:k4fSgmpNuI9Am6gZ@cluster0.le9ctvj.mongodb.net/typing-game?retryWrites=true&w=majority"
+const mongoURI = process.env.MONGODB_URL
 mongoose.connect(mongoURI, console.log("Connected to DB")) 
+ 
 
 const calculateTime = (time) => {
     let minutes = Math.floor(time / 60)
